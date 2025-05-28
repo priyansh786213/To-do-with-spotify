@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Task Planner</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #4f46e5;
+      --accent-color: #22d3ee;
+      --bg-color: #f9fafb;
+      --card-bg: #ffffff;
+      --text-color: #1e293b;
+      --light-text: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .container {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 700px;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    input, button {
+      padding: 0.9rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      border: 1px solid #e2e8f0;
+      transition: all 0.3s;
+    }
+
+    input:focus {
+      border-color: var(--primary-color);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+    }
+
+    button {
+      background: var(--primary-color);
+      color: white;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #4338ca;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 2rem;
+    }
+
+    li {
+      background-color: #f1f5f9;
+      margin-bottom: 1rem;
+      padding: 1rem 1.2rem;
+      border-left: 6px solid var(--accent-color);
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+    }
+
+    li:hover {
+      transform: translateY(-4px);
+    }
+
+    .timestamp {
+      font-size: 0.875rem;
+      color: var(--light-text);
+    }
+
+    .delete-btn {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      color: #ef4444;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .delete-btn:hover {
+      transform: scale(1.2);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🗓️ Daily Task Planner</h1>
+    <div class="form-group">
+      <input type="text" id="task" placeholder="What needs to be done?">
+      <input type="time" id="time">
+      <input type="date" id="date">
+      <button onclick="addTask()">Add Task</button>
+    </div>
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    function addTask() {
+      const taskInput = document.getElementById('task');
+      const timeInput = document.getElementById('time');
+      const dateInput = document.getElementById('date');
+
+      const task = taskInput.value;
+      const time = timeInput.value;
+      const date = dateInput.value;
+
+      if (!task || !time || !date) {
+        alert("Please fill out all fields.");
+        return;
+      }
+
+      const listItem = document.createElement('li');
+      listItem.innerHTML = `
+        <div>
+          <strong>${task}</strong><br>
+          <span class="timestamp">🕒 ${time} | 📅 ${date}</span>
+        </div>
+        <button class="delete-btn" onclick="this.parentElement.remove()">✖</button>
+      `;
+      document.getElementById('taskList').appendChild(listItem);
+
+      taskInput.value = '';
+      timeInput.value = '';
+      dateInput.value = '';
+    }
+  </script>
+</body>
+</html>
